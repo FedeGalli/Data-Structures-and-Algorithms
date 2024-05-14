@@ -7,36 +7,6 @@ public class MyQueue<T> {
             this.data = data;
             this.next = null;
         }
-
-        public void append(T data) {
-
-            QueueNode<T> n = this;
-
-            while(n.next != null) {
-                n = n.next;
-            }
-
-            n.next = new QueueNode<T>(data);
-
-        }
-
-        public void append(QueueNode<T> node) {
-
-            QueueNode<T> n = this;
-
-            if (n.data == null) {
-                n = node;
-                return;
-            }
-
-
-            while(n.next != null) {
-                n = n.next;
-            }
-
-            n.next = node;
-
-        }
     }
 
     private QueueNode<T> head;

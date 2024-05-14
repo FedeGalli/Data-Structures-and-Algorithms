@@ -7,36 +7,6 @@ public class MyStack<T> {
             this.data = data;
             this.next = null;
         }
-
-        public void append(T data) {
-
-            StackNode<T> n = this;
-
-            while(n.next != null) {
-                n = n.next;
-            }
-
-            n.next = new StackNode<T>(data);
-
-        }
-
-        public void append(StackNode<T> node) {
-
-            StackNode<T> n = this;
-
-            if (n.data == null) {
-                n = node;
-                return;
-            }
-
-
-            while(n.next != null) {
-                n = n.next;
-            }
-
-            n.next = node;
-
-        }
     }
 
 
