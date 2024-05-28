@@ -109,8 +109,6 @@ public class BinaryTree {
     }
 
 
-
-
     public static void main (String[] args) {
         BinaryTree t = new BinaryTree(0);
         
