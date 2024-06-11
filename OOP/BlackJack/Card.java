@@ -14,8 +14,8 @@ public class Card {
 
     public Card() {
         Random rand = new Random();
-        this.number = rand.nextInt(14);
-        
+        this.number = rand.nextInt(13) + 1;
+
         switch(rand.nextInt(4)) {
             case 0:
                 this.seed = Seed.CLUBS;

@@ -49,6 +49,10 @@ public class Player {
         return isReady;
     }
 
+    public void setIsReady(boolean isReady) {
+        this.isReady = isReady;
+    }
+
     public void resetProperties() {
         this.cards = new ArrayList<>();
         this.isReady = false;
@@ -60,7 +64,7 @@ public class Player {
         boolean elevenCounted = false;
         for (Card card : cards) {
 
-            if (card.getNumber() == 1 && !elevenCounted) {
+            if (card.getNumber() == 1 && !elevenCounted && maxSum + 11 <= 21) {
                 maxSum += 11;
                 elevenCounted = true;
             }
@@ -70,5 +74,17 @@ public class Player {
             
         }
         return maxSum;
+    }
+
+    public String getStringCards() {
+
+        String s = "";
+        for (Card card : cards) {
+            s += (card.getNumber() > 10 ? 10 : card.getNumber()) + " ";
+        }
+
+        s += "sum: " + this.cardsSum();
+
+        return s;
     }
 }
