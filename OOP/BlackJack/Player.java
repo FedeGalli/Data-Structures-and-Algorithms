@@ -7,12 +7,14 @@ public class Player {
     private ArrayList<Card> cards;
     private float money;
     private boolean isReady;
+    private boolean isBusted;
 
     public Player(String name, float money) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.money = money;
         this.isReady = false;
+        this.isBusted = false;
     }
 
     public float bet(float amount) {
@@ -56,6 +58,7 @@ public class Player {
     public void resetProperties() {
         this.cards = new ArrayList<>();
         this.isReady = false;
+        this.isBusted = false;
     }
 
     public int cardsSum() {
@@ -86,5 +89,18 @@ public class Player {
         s += "sum: " + this.cardsSum();
 
         return s;
+    }
+
+    public boolean isBusted() {
+        if (cardsSum() > 21) {
+            this.isBusted = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean getIsBusted() {
+        return this.isBusted;
     }
 }

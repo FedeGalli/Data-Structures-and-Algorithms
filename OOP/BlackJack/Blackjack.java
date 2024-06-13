@@ -45,7 +45,7 @@ public class Blackjack {
         System.out.println("Dealer cards: " + dealer.getStringCards());
 
         // print dealer first card
-
+        i = 0;
         for (Player player : this.tablePlayers) {
 
             while (!player.isReady()) {
@@ -62,9 +62,9 @@ public class Blackjack {
                             player.drawCard(new Card());
                             System.out.println(player.getName() + " cards: " + player.getStringCards());
 
-                            if (isBusted(player)) {
-                                tablePlayers.remove(player);
+                            if (player.isBusted()) {
                                 dealer.addMoney(bets.get(i));
+                                player.setIsReady(true);
                                 System.out.println(player.getName() + " You lost " + bets.get(i));
                             }
                             break;
@@ -76,6 +76,8 @@ public class Blackjack {
                     e.printStackTrace();
                 }
             }
+
+            i++;
         }
 
         // make table draw cards until number 17
@@ -84,7 +86,6 @@ public class Blackjack {
             System.out.println("Dealer cards: " + dealer.getStringCards());
         }
 
-
         int dealerNumber = dealer.cardsSum();
 
         i = 0;
@@ -92,22 +93,23 @@ public class Blackjack {
         // cheking in condition
         for (Player player : this.tablePlayers) {
 
-            // win
-            if (dealerNumber < player.cardsSum() || dealerNumber > 21) {
-                player.addMoney(bets.get(i) * 2);
-                dealer.addMoney(-bets.get(i));
+            if (!player.getIsBusted()) {
+                // win
+                if (dealerNumber < player.cardsSum() || dealerNumber > 21) {
+                    player.addMoney(bets.get(i) * 2);
+                    dealer.addMoney(-bets.get(i));
 
-                System.out.println(player.getName() + " You won " + bets.get(i) * 2);
-            }
-            // push
-            else if (dealerNumber == player.cardsSum()) {
-                player.addMoney(bets.get(i));
+                    System.out.println(player.getName() + " You won " + bets.get(i) * 2);
+                }
+                // push
+                else if (dealerNumber == player.cardsSum()) {
+                    player.addMoney(bets.get(i));
 
-                System.out.println(player.getName() + " Push");
-            }
-            else {
-                System.out.println(player.getName() + " You lost " + bets.get(i));
-                dealer.addMoney(bets.get(i));
+                    System.out.println(player.getName() + " Push");
+                } else {
+                    System.out.println(player.getName() + " You lost " + bets.get(i));
+                    dealer.addMoney(bets.get(i));
+                }
             }
 
             i++;
@@ -115,10 +117,4 @@ public class Blackjack {
 
     }
 
-    private boolean isBusted(Player player) {
-        if (player.cardsSum() > 21)
-            return true;
-
-        return false;
-    }
 }
