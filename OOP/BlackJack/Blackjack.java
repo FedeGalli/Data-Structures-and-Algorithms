@@ -1,8 +1,5 @@
 package OOP.BlackJack;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Blackjack {
@@ -24,7 +21,6 @@ public class Blackjack {
 
     public void startRound() {
         int i = 0;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         // initial phase
         for (Player player : this.tablePlayers) {
@@ -47,34 +43,19 @@ public class Blackjack {
         // print dealer first card
         i = 0;
         for (Player player : this.tablePlayers) {
-
             while (!player.isReady()) {
-                String userInput;
-                int userChoice;
-                try {
-                    System.out.println("0 to draw a card \n1 to stay");
-                    userInput = reader.readLine();
-                    userChoice = Integer.parseInt(userInput);
+                //System.out.println("0 to draw a card \n1 to stay");
 
-                    // user action
-                    switch (userChoice) {
-                        case 0:
-                            player.drawCard(new Card());
-                            System.out.println(player.getName() + " cards: " + player.getStringCards());
+                if (player.cardsSum() < 13 || player.hasOnlyOneAce()) {
+                    player.drawCard(new Card());
 
-                            if (player.isBusted()) {
-                                dealer.addMoney(bets.get(i));
-                                player.setIsReady(true);
-                                System.out.println(player.getName() + " You lost " + bets.get(i));
-                            }
-                            break;
-                        case 1:
-                            player.setIsReady(true);
-                            break;
+                    if (player.isBusted()) {
+                        dealer.addMoney(bets.get(i));
+                        player.setIsReady(true);
+                        //System.out.println(player.getName() + " You lost " + bets.get(i));
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } else
+                    player.setIsReady(true);
             }
 
             i++;
@@ -83,7 +64,7 @@ public class Blackjack {
         // make table draw cards until number 17
         while (dealer.cardsSum() < 17) {
             dealer.drawCard(new Card());
-            System.out.println("Dealer cards: " + dealer.getStringCards());
+            //System.out.println("Dealer cards: " + dealer.getStringCards());
         }
 
         int dealerNumber = dealer.cardsSum();
@@ -99,21 +80,24 @@ public class Blackjack {
                     player.addMoney(bets.get(i) * 2);
                     dealer.addMoney(-bets.get(i));
 
-                    System.out.println(player.getName() + " You won " + bets.get(i) * 2);
+                    //System.out.println(player.getName() + " You won " + bets.get(i) * 2);
                 }
                 // push
                 else if (dealerNumber == player.cardsSum()) {
                     player.addMoney(bets.get(i));
 
-                    System.out.println(player.getName() + " Push");
+                    //System.out.println(player.getName() + " Push");
                 } else {
-                    System.out.println(player.getName() + " You lost " + bets.get(i));
+                    //System.out.println(player.getName() + " You lost " + bets.get(i));
                     dealer.addMoney(bets.get(i));
                 }
             }
-
+            System.out.println("P" + i + " money: " + player.getMoney());
             i++;
+            player.resetProperties();
         }
+        dealer.resetProperties();
+        System.out.println("DEALER money: " + dealer.getMoney());
 
     }
 

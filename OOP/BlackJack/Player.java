@@ -19,10 +19,6 @@ public class Player {
 
     public float bet(float amount) {
 
-        if (money - amount < 0) {
-            return -1;
-        }
-
         this.money = money - amount;
         return amount;
     }
@@ -102,5 +98,22 @@ public class Player {
 
     public boolean getIsBusted() {
         return this.isBusted;
+    }
+
+    public boolean hasOnlyOneAce() {
+        int counter = 0;
+        for (Card card : cards) {
+            if (card.getNumber() == 1) {
+                counter++;
+            }
+
+            if (counter > 1)
+                return false;
+        }
+
+        if (counter == 1)
+            return true;
+
+        return false;
     }
 }
