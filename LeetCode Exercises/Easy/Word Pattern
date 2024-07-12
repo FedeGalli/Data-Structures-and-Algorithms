@@ -1,0 +1,20 @@
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+            
+            pattern_map = {}
+            splitted_string = s.split(" ")
+
+            if len(pattern) != len(splitted_string):
+                return False
+
+            for i in range(len(pattern)):
+                if pattern[i] in pattern_map:
+                    if pattern_map[pattern[i]] != splitted_string[i]:
+                        return False
+                else:
+                    if splitted_string[i] in pattern_map.values():
+                        return False
+                    
+                    pattern_map[pattern[i]] = splitted_string[i]
+
+            return True
