@@ -1,17 +1,24 @@
-def get_diameter(node):
-    max = 0
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 
-    tree_recursion(node, max)
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        res = 0
 
-    return max
+        def dfs(root):
+            nonlocal res
+            if not root:
+                return 0
+        
+            l = dfs(root.left)
+            r = dfs(root.right)
 
-def tree_recursion(node, max):
+            res = max(res, l + r)
+            return max(l + 1, r + 1)
 
-    if not node:
-        return 0
-    
-    max_l = get_diameter(node.left)
-    max_r = get_diameter(node.right)
-    max = max(max, max_l + max_r)
-
-    return 1 + max(max_l, max_r)
+        dfs(root)
+        return res
